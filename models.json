@@ -1,0 +1,274 @@
+{
+    "models": [
+      {
+        "name": "gemma3",
+        "parameters": ["vision", "1b", "4b", "12b", "27b"],
+        "commands": [
+          "ollama run gemma3:vision",
+          "ollama run gemma3:1b",
+          "ollama run gemma3:4b",
+          "ollama run gemma3:12b",
+          "ollama run gemma3:27b"
+        ]
+      },
+      {
+        "name": "llama3.3",
+        "parameters": ["tools", "70b"],
+        "commands": [
+          "ollama run llama3.3:tools",
+          "ollama run llama3.3:70b"
+        ]
+      },
+      {
+        "name": "phi4",
+        "parameters": ["14b"],
+        "commands": [
+          "ollama run phi4:14b"
+        ]
+      },
+       {
+        "name": "llama3.1",
+        "parameters": ["tools", "8b", "70b", "405b"],
+        "commands": [
+          "ollama run llama3.1:tools",
+          "ollama run llama3.1:8b",
+          "ollama run llama3.1:70b",
+          "ollama run llama3.1:405b"
+        ]
+      },
+      {
+        "name": "mistral",
+        "parameters": ["tools", "7b"],
+        "commands": [
+          "ollama run mistral:tools",
+          "ollama run mistral:7b"
+        ]
+      },
+      {
+        "name": "llama3",
+        "parameters": ["8b", "70b"],
+        "commands": [
+          "ollama run llama3:8b",
+          "ollama run llama3:70b"
+        ]
+      },
+      {
+        "name": "qwen2.5-coder",
+        "parameters": ["tools", "0.5b", "1.5b", "3b", "7b", "14b", "32b"],
+        "commands": [
+          "ollama run qwen2.5-coder:tools",
+          "ollama run qwen2.5-coder:0.5b",
+          "ollama run qwen2.5-coder:1.5b",
+          "ollama run qwen2.5-coder:3b",
+          "ollama run qwen2.5-coder:7b",
+          "ollama run qwen2.5-coder:14b",
+          "ollama run qwen2.5-coder:32b"
+        ]
+      },
+      {
+        "name": "phi3",
+        "parameters": ["3.8b", "14b"],
+        "commands": [
+          "ollama run phi3:3.8b",
+          "ollama run phi3:14b"
+        ]
+      },
+      {
+        "name": "codellama",
+        "parameters": ["7b", "13b", "34b", "70b"],
+        "commands": [
+          "ollama run codellama:7b",
+          "ollama run codellama:13b",
+          "ollama run codellama:34b",
+          "ollama run codellama:70b"
+        ]
+      },
+      {
+        "name": "mistral-nemo",
+        "parameters": ["tools", "12b"],
+        "commands": [
+          "ollama run mistral-nemo:tools",
+          "ollama run mistral-nemo:12b"
+        ]
+      },
+      {
+        "name": "starcoder2",
+        "parameters": ["3b", "7b", "15b"],
+        "commands": [
+          "ollama run starcoder2:3b",
+          "ollama run starcoder2:7b",
+          "ollama run starcoder2:15b"
+        ]
+      },
+      {
+        "name": "deepseek-coder-v2",
+        "parameters": ["16b", "236b"],
+        "commands": [
+          "ollama run deepseek-coder-v2:16b",
+          "ollama run deepseek-coder-v2:236b"
+        ]
+      },
+       {
+        "name": "deepseek-coder",
+        "parameters": ["1.3b", "6.7b", "33b"],
+        "commands": [
+          "ollama run deepseek-coder:1.3b",
+          "ollama run deepseek-coder:6.7b",
+          "ollama run deepseek-coder:33b"
+        ]
+      },
+      {
+        "name": "mixtral",
+        "parameters": ["tools", "8x7b", "8x22b"],
+        "commands": [
+          "ollama run mixtral:tools",
+          "ollama run mixtral:8x7b",
+          "ollama run mixtral:8x22b"
+        ]
+      },
+      {
+        "name": "codegemma",
+        "parameters": ["2b", "7b"],
+        "commands": [
+          "ollama run codegemma:2b",
+          "ollama run codegemma:7b"
+        ]
+      },
+      {
+        "name": "phi",
+        "parameters": ["2.7b"],
+        "commands": [
+          "ollama run phi:2.7b"
+        ]
+      },
+      {
+        "name": "mistral-small",
+        "parameters": ["tools", "22b", "24b"],
+        "commands": [
+          "ollama run mistral-small:tools",
+          "ollama run mistral-small:22b",
+          "ollama run mistral-small:24b"
+        ]
+      },
+      {
+        "name": "wizardlm2",
+        "parameters": ["tools", "7b", "8x22b"],
+        "commands": [
+          "ollama run wizardlm2:tools",
+          "ollama run wizardlm2:7b",
+          "ollama run wizardlm2:8x22b"
+        ]
+      },
+      {
+        "name": "phi3.5",
+        "parameters": ["3.8b"],
+        "commands": [
+          "ollama run phi3.5:3.8b"
+        ]
+      },
+      {
+        "name": "codestral",
+        "parameters": ["tools", "22b"],
+        "commands": [
+          "ollama run codestral:tools",
+          "ollama run codestral:22b"
+        ]
+      },
+      {
+        "name": "granite-code",
+        "parameters": ["3b", "8b", "20b", "34b"],
+        "commands": [
+          "ollama run granite-code:3b",
+          "ollama run granite-code:8b",
+          "ollama run granite-code:20b",
+          "ollama run granite-code:34b"
+        ]
+      },
+      {
+        "name": "starcoder",
+        "parameters": ["1b", "3b", "7b", "15b"],
+        "commands": [
+          "ollama run starcoder:1b",
+          "ollama run starcoder:3b",
+          "ollama run starcoder:7b",
+          "ollama run starcoder:15b"
+        ]
+      },
+      {
+        "name": "codeqwen",
+        "parameters": ["7b"],
+        "commands": [
+          "ollama run codeqwen:7b"
+        ]
+      },
+      {
+        "name": "mistral-large",
+        "parameters": ["tools", "123b"],
+        "commands": [
+          "ollama run mistral-large:tools",
+          "ollama run mistral-large:123b"
+        ]
+      },
+      {
+        "name": "stable-code",
+        "parameters": ["3b"],
+        "commands": [
+          "ollama run stable-code:3b"
+        ]
+      },
+      {
+        "name": "wizardcoder",
+        "parameters": ["33b"],
+        "commands": [
+          "ollama run wizardcoder:33b"
+        ]
+      },
+      {
+        "name": "sqlcoder",
+        "parameters": ["7b", "15b"],
+        "commands": [
+          "ollama run sqlcoder:7b",
+          "ollama run sqlcoder:15b"
+        ]
+      },
+       {
+        "name": "phi4-mini",
+        "parameters": ["tools", "3.8b"],
+        "commands": [
+          "ollama run phi4-mini:tools",
+          "ollama run phi4-mini:3.8b"
+        ]
+      },
+      {
+        "name": "dolphincoder",
+        "parameters": ["7b", "15b"],
+        "commands": [
+          "ollama run dolphincoder:7b",
+          "ollama run dolphincoder:15b"
+        ]
+      },
+      {
+        "name": "phind-codellama",
+        "parameters": ["34b"],
+        "commands": [
+          "ollama run phind-codellama:34b"
+        ]
+      },
+      {
+          "name": "yi-coder",
+          "parameters": ["1.5b", "9b"],
+          "commands": [
+              "ollama run yi-coder:1.5b",
+              "ollama run yi-coder:9b"
+          ]
+      },
+      {
+          "name": "openicoder",
+          "parameters": ["1.5b", "8b"],
+          "commands": [
+              "ollama run opencoder:1.5b",
+              "ollama run opencoder:8b"
+          ]
+      }
+    ]
+  }

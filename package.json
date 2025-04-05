@@ -1,0 +1,189 @@
+{
+  "name": "logcai",
+  "displayName": "Logcai",
+  "description": "AI coding assistant",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Machine Learning",
+    "Snippets"
+  ],
+  "activationEvents": [
+    "onView:logcaiView",
+    "onCommand:logcai.openChat",
+    "onCommand:logcai.signIn",
+    "onCommand:logcai.toggleInlineSuggestions",
+    "onCommand:logcai.toggleAutocomplete",
+    "onCommand:logcai.selectModel",
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "logcai.openChat",
+        "title": "Logcai: Open AI Assistant"
+      },
+      {
+        "command": "logcai.signIn",
+        "title": "Logcai: Sign In"
+      },
+      {
+        "command": "logcai.toggleInlineSuggestions",
+        "title": "Logcai: Toggle Inline Suggestions"
+      },
+      {
+        "command": "logcai.toggleAutocomplete",
+        "title": "Logcai: Toggle Autocomplete"
+      },
+      {
+        "command": "logcai.selectModel",
+        "title": "Logcai: Select AI Model"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "logcaiSidebar",
+          "title": "Logcai",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "logcaiSidebar": [
+        {
+          "id": "logcaiView",
+          "name": "AI Assistant",
+          "type": "webview"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Logcai",
+      "properties": {
+        "logcai.inlineCompletions.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable Logcai's inline code suggestions (ghost text)"
+        },
+        "logcai.completions.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable Logcai's autocomplete suggestions in the completion menu"
+        },
+        "logcai.defaultModel": {
+          "type": "string",
+          "default": "mistral",
+          "enum": [
+            "mistral",
+            "llama3",
+            "gemma3",
+            "phi3"
+          ],
+          "description": "Select the default AI model to use for code suggestions"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "logcai.toggleInlineSuggestions",
+        "key": "ctrl+alt+i",
+        "mac": "cmd+alt+i",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "logcai.contextMenu",
+          "group": "z_commands"
+        }
+      ],
+      "logcai.contextMenu": [
+        {
+          "command": "logcai.toggleInlineSuggestions",
+          "group": "1_suggestions"
+        },
+        {
+          "command": "logcai.toggleAutocomplete",
+          "group": "1_suggestions"
+        },
+        {
+          "command": "logcai.selectModel",
+          "group": "2_config"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "logcai.contextMenu",
+        "label": "Logcai AI"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile && npm run build:webview",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "build:webview": "vite build",
+    "dev:webview": "vite",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/lodash": "^4.17.16",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.17.24",
+    "@types/path-browserify": "^1.0.3",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.98.0",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.19.0",
+    "postcss": "^8.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.17",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.3"
+  },
+  "dependencies": {
+    "axios": "^1.8.4",
+    "better-sqlite3": "^11.9.1",
+    "firebase": "^11.4.0",
+    "firebase-admin": "^13.2.0",
+    "highlight.js": "^11.11.1",
+    "hnswlib-node": "^3.0.0",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.485.0",
+    "ollama": "^0.5.14",
+    "path-browserify": "^1.0.1",
+    "php-parser": "^3.2.2",
+    "uuid": "9.0.1",
+    "web-tree-sitter": "^0.25.3"
+  },
+  "keywords": [
+    "ai",
+    "code completion",
+    "assistant",
+    "autocomplete",
+    "code suggestion",
+    "ollama",
+    "coding assistant"
+  ],
+  "author": "",
+  "license": "ISC"
+}

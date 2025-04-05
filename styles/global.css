@@ -1,0 +1,186 @@
+// src/styles/ThemeProvider.tsx
+import React, { createContext, useContext, ReactNode, useEffect, useState } from 'react';
+
+// Define the theme type based on CSS variables
+export interface ThemeType {
+  colors: {
+    primary: string;
+    primaryHover: string;
+    primaryDark: string;
+    secondary: string;
+    secondaryHover: string;
+    secondaryDark: string;
+    accent: string;
+    accentHover: string;
+    accentDark: string;
+    background: string;
+    backgroundLight: string;
+    backgroundLighter: string;
+    backgroundDark: string;
+    text: string;
+    textSecondary: string;
+    textMuted: string;
+    hover: string;
+    active: string;
+    focus: string;
+    border: string;
+    borderLight: string;
+    borderDark: string;
+    error: string;
+    errorLight: string;
+    warning: string;
+    warningLight: string;
+    success: string;
+    successLight: string;
+    info: string;
+    infoLight: string;
+  };
+  spacing: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+    xxl: string;
+  };
+  borderRadius: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+    round: string;
+  };
+  shadows: {
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+    xxl: string;
+  };
+  transitions: {
+    fast: string;
+    normal: string;
+    slow: string;
+  };
+  zIndex: {
+    base: number;
+    dropdown: number;
+    modal: number;
+    tooltip: number;
+  };
+}
+
+// Default theme that connects to CSS variables
+const defaultTheme: ThemeType = {
+  colors: {
+    primary: 'var(--primary-color)',
+    primaryHover: 'var(--primary-hover)',
+    primaryDark: 'var(--primary-dark)',
+    secondary: 'var(--secondary-color)',
+    secondaryHover: 'var(--secondary-hover)',
+    secondaryDark: 'var(--secondary-dark)',
+    accent: 'var(--accent-color)',
+    accentHover: 'var(--accent-hover)',
+    accentDark: 'var(--accent-dark)',
+    background: 'var(--background)',
+    backgroundLight: 'var(--background-light)',
+    backgroundLighter: 'var(--background-lighter)',
+    backgroundDark: 'var(--background-dark)',
+    text: 'var(--text)',
+    textSecondary: 'var(--text-secondary)',
+    textMuted: 'var(--text-muted)',
+    hover: 'var(--hover)',
+    active: 'var(--active)',
+    focus: 'var(--focus)',
+    border: 'var(--border)',
+    borderLight: 'var(--border-light)',
+    borderDark: 'var(--border-dark)',
+    error: 'var(--error)',
+    errorLight: 'var(--error-light)',
+    warning: 'var(--warning)',
+    warningLight: 'var(--warning-light)',
+    success: 'var(--success)',
+    successLight: 'var(--success-light)',
+    info: 'var(--info)',
+    infoLight: 'var(--info-light)',
+  },
+  spacing: {
+    xs: 'var(--spacing-xs)',
+    sm: 'var(--spacing-sm)',
+    md: 'var(--spacing-md)',
+    lg: 'var(--spacing-lg)',
+    xl: 'var(--spacing-xl)',
+    xxl: 'var(--spacing-xxl)',
+  },
+  borderRadius: {
+    xs: 'var(--radius-xs)',
+    sm: 'var(--radius-sm)',
+    md: 'var(--radius-md)',
+    lg: 'var(--radius-lg)',
+    xl: 'var(--radius-xl)',
+    round: 'var(--radius-round)',
+  },
+  shadows: {
+    sm: 'var(--shadow-sm)',
+    md: 'var(--shadow-md)',
+    lg: 'var(--shadow-lg)',
+    xl: 'var(--shadow-xl)',
+    xxl: 'var(--shadow-lg)',
+  },
+  transitions: {
+    fast: `all var(--transition-fast) ease`,
+    normal: `all var(--transition-normal) ease`,
+    slow: `all var(--transition-slow) ease`,
+  },
+  zIndex: {
+    base: 1,
+    dropdown: 10,
+    modal: 100,
+    tooltip: 1000,
+  },
+};
+
+// Create the theme context
+export const ThemeContext = createContext<ThemeType>(defaultTheme);
+
+// Custom hook for accessing the theme
+export const useTheme = () => useContext(ThemeContext);
+
+interface ThemeProviderProps {
+  children: ReactNode;
+}
+
+// Theme provider component with flexibility for theming
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  const [theme, setTheme] = useState<ThemeType>(defaultTheme);
+  
+  // For future customization if needed
+  // This could be extended to load themes from local storage, etc.
+  useEffect(() => {
+    // Synchronize with CSS variables if needed in the future
+    // This is a placeholder for potential theme switching functionality
+    
+    // Example: document.documentElement.style.setProperty('--primary-color', '#00e5ff');
+    
+    // For now, we'll use the default theme that connects to CSS variables
+  }, []);
+
+  return (
+    <ThemeContext.Provider value={theme}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+// Utility types for use in components
+export type ColorType = keyof ThemeType['colors'];
+export type SpacingType = keyof ThemeType['spacing'];
+export type BorderRadiusType = keyof ThemeType['borderRadius'];
+export type ShadowType = keyof ThemeType['shadows'];
+
+// Utility functions
+export const getColor = (color: ColorType, theme = defaultTheme): string => theme.colors[color];
+export const getSpacing = (size: SpacingType, theme = defaultTheme): string => theme.spacing[size];
+export const getBorderRadius = (size: BorderRadiusType, theme = defaultTheme): string => theme.borderRadius[size];
+export const getShadow = (size: ShadowType, theme = defaultTheme): string => theme.shadows[size];
