@@ -1,0 +1,18 @@
+{
+  "optimizer": {
+    "name": "Code Optimizer",
+    "description": "Improves code quality",
+    "promptTemplate": "Optimize the following code:\n\n{input}",
+    "model": "mistral",
+    "entrypoint": "optimizer.ts",
+    "planRequired": "Free"
+  },
+  "docwriter": {
+    "name": "Doc Writer",
+    "description": "Writes docstrings",
+    "promptTemplate": "Write documentation for:\n\n{input}",
+    "model": "gemma3",
+    "entrypoint": "docwriter.ts",
+    "planRequired": "CloudPro"
+  }
+}
