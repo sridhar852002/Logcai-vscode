@@ -1,0 +1,555 @@
+:root {
+  --background-color: var(--vscode-editor-background);
+  --foreground-color: var(--vscode-editor-foreground);
+  --input-background: var(--vscode-input-background);
+  --input-foreground: var(--vscode-input-foreground);
+  --input-border: var(--vscode-input-border);
+  --button-background: var(--vscode-button-background);
+  --button-foreground: var(--vscode-button-foreground);
+  --button-hover-background: var(--vscode-button-hoverBackground);
+  
+  /* Cursor-like message backgrounds */
+  --user-message-background: rgba(56, 139, 253, 0.1);
+  --assistant-message-background: rgba(255, 255, 255, 0.03);
+  --user-message-foreground: var(--vscode-editor-foreground);
+  --assistant-message-foreground: var(--vscode-editor-foreground);
+  
+  /* Code blocks styling */
+  --code-background: rgba(0, 0, 0, 0.2);
+  --code-foreground: var(--vscode-textCodeBlock-foreground, var(--vscode-editor-foreground));
+  --code-border: var(--vscode-panel-border, #444);
+  --line-number-color: rgba(128, 128, 128, 0.5);
+  
+  /* UI Colors */
+  --error-color: var(--vscode-errorForeground);
+  --border-color: var(--vscode-panel-border, rgba(128, 128, 128, 0.2));
+  --header-color: var(--vscode-panelTitle-activeForeground);
+  --divider-color: var(--vscode-editorRuler-foreground, rgba(128, 128, 128, 0.3));
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --accent-color: var(--vscode-textLink-foreground, #58a6ff);
+  
+  /* Syntax highlighting colors */
+  --code-keyword-color: #ff79c6;
+  --code-string-color: #f1fa8c;
+  --code-function-color: #50fa7b;
+  --code-comment-color: #6272a4;
+  --code-number-color: #bd93f9;
+  --code-operator-color: #ff79c6;
+  --code-property-color: #8be9fd;
+  --code-punctuation-color: #f8f8f2;
+  --code-class-name-color: #8be9fd;
+  --code-builtin-color: #ffb86c;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif);
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+/* Status Bar */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px var(--shadow-color);
+  position: relative;
+  z-index: 10;
+  font-size: 12px;
+}
+
+.model-status {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.model-status .status-icon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 4px currentColor;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.status-error {
+  color: #f14c4c;
+}
+
+.status-success {
+  color: #73c991;
+}
+
+.connect-button {
+  background-color: var(--button-background);
+  color: var(--button-foreground);
+  border: none;
+  padding: 4px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 8px;
+  transition: background-color 0.2s;
+}
+
+.connect-button:hover {
+  background-color: var(--button-hover-background);
+}
+
+/* Check connection button - slightly different appearance */
+.check-button {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--button-background);
+  color: var(--vscode-editor-foreground);
+  margin-left: 4px;
+}
+
+.check-button:hover {
+  background-color: var(--button-background);
+  color: var(--button-foreground);
+}
+
+.model-status.connected .status-icon {
+  background-color: #4caf50;
+}
+
+.model-status.disconnected .status-icon {
+  background-color: var(--error-color);
+}
+
+/* Messages Container */
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  scroll-behavior: smooth;
+}
+
+/* Welcome Message */
+.welcome-message {
+  text-align: center;
+  padding: 28px;
+  opacity: 0.8;
+  max-width: 600px;
+  margin: 32px auto;
+  background-color: rgba(128, 128, 128, 0.05);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  animation: fadeIn 0.3s ease;
+}
+
+.welcome-message h2 {
+  margin-top: 0;
+  color: var(--header-color);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.welcome-message p {
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Messages */
+.message {
+  margin-bottom: 16px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  max-width: calc(100% - 32px);
+  position: relative;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  animation: slideIn 0.2s ease;
+}
+
+.message:hover {
+  background-color: rgba(128, 128, 128, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.user-message {
+  background-color: var(--user-message-background);
+  color: var(--user-message-foreground);
+  margin-left: auto;
+  border-left-color: rgba(56, 139, 253, 0.6); /* Slightly stronger accent */
+  max-width: 90%;
+}
+
+.assistant-message {
+  background-color: var(--assistant-message-background);
+  color: var(--assistant-message-foreground);
+  margin-right: auto;
+  border-left-color: rgba(80, 150, 255, 0.5); /* Brighter accent color */
+  max-width: 90%; /* Ensure messages don't stretch too wide */
+}
+
+.error-message {
+  background-color: rgba(255, 0, 0, 0.05);
+  color: var(--error-color);
+  margin-right: auto;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  border-left-color: rgba(255, 0, 0, 0.4);
+}
+
+/* Message Header */
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--header-color);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--divider-color);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sender-label {
+  font-weight: 600;
+}
+
+.message-timestamp {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-left: 8px;
+}
+
+/* Message Content */
+.message-content {
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Code Blocks */
+.message-content pre {
+  background: var(--code-background);
+  color: var(--code-foreground);
+  padding: 12px 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 12px 0;
+  border: 1px solid var(--code-border);
+  position: relative;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.message-content pre::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 8px;
+  font-size: 0.7em;
+  background-color: rgba(128, 128, 128, 0.3);
+  border-bottom-left-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.message-content pre code {
+  background: transparent;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  font-size: 13px;
+  display: block;
+  width: 100%;
+  font-family: inherit;
+}
+
+/* Line Numbers */
+.message-content pre .line {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5em;
+}
+
+.message-content pre .line-number {
+  color: var(--line-number-color);
+  min-width: 2.5em;
+  padding-right: 1em;
+  text-align: right;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+}
+
+.message-content pre .line-content {
+  flex: 1;
+  white-space: pre;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
+/* Inline Code */
+.message-content code:not(pre code) {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Menlo', 'Monaco', 'Courier New', monospace;
+  background: var(--code-background);
+  color: var(--code-foreground);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  letter-spacing: -0.3px;
+}
+
+/* Action Buttons */
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-button {
+  background: none;
+  border: 1px solid var(--divider-color);
+  color: var(--foreground-color);
+  cursor: pointer;
+  padding: 3px 8px;
+  opacity: 0.7;
+  font-size: 11px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.action-button:hover {
+  opacity: 1;
+  background-color: rgba(128, 128, 128, 0.2);
+}
+
+/* Copy Code Button */
+.copy-code-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: rgba(60, 60, 60, 0.7);
+  color: #ccc;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 5;
+  opacity: 0;
+}
+
+.message-content pre:hover .copy-code-button {
+  opacity: 1;
+}
+
+.copy-code-button:hover {
+  background-color: rgba(80, 80, 80, 0.9);
+  color: white;
+  border-color: #666;
+}
+
+/* Input Area */
+.input-container {
+  display: flex;
+  padding: 16px;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--border-color);
+  box-shadow: 0 -2px 6px var(--shadow-color);
+  position: relative;
+  z-index: 10;
+  padding-bottom: 24px;
+}
+
+#message-input {
+  flex: 1;
+  background-color: var(--input-background);
+  color: var(--input-foreground);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  resize: none;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+#message-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+#send-button {
+  background-color: var(--button-background);
+  color: var(--button-foreground);
+  border: none;
+  border-radius: 8px;
+  margin-left: 8px;
+  padding: 0 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#send-button:hover {
+  background-color: var(--button-hover-background);
+}
+
+/* Typing Indicator */
+.typing-indicator {
+  padding: 10px 16px;
+  opacity: 0.8;
+}
+
+.typing-dots {
+  display: flex;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  margin: 0 2px;
+  background-color: currentColor;
+  border-radius: 50%;
+  opacity: 0.6;
+  display: inline-block;
+  animation: typing-dot 1.4s infinite ease-in-out both;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent-color);
+  color: var(--button-foreground);
+  padding: 8px 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  z-index: 100;
+  opacity: 0;
+  animation: fade-in 0.3s ease forwards, fade-out 0.5s ease forwards 2s;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* Links */
+.chat-link {
+  color: var(--accent-color);
+  text-decoration: none;
+  border-bottom: 1px dotted;
+}
+
+.chat-link:hover {
+  text-decoration: none;
+  border-bottom: 1px solid;
+}
+
+/* Suggestion buttons */
+.suggestion-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.suggestion-button {
+  background-color: var(--button-background);
+  color: var(--button-foreground);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.suggestion-button:hover {
+  background-color: var(--button-hover-background);
+}
+
+/* Keyboard shortcut hint */
+.shortcut-hint {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes typing-dot {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.6; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Syntax Highlighting */
+.token.comment { color: var(--code-comment-color); font-style: italic; }
+.token.string { color: var(--code-string-color); }
+.token.keyword { color: var(--code-keyword-color); font-weight: bold; }
+.token.function { color: var(--code-function-color); }
+.token.number { color: var(--code-number-color); }
+.token.operator { color: var(--code-operator-color); }
+.token.property { color: var(--code-property-color); }
+.token.punctuation { color: var(--code-punctuation-color); }
+.token.class-name { color: var(--code-class-name-color); font-style: italic; }
+.token.builtin { color: var(--code-builtin-color); }
+.token.boolean { color: var(--code-number-color); font-weight: bold; }
+.token.decorator { color: var(--code-function-color); font-weight: bold; }

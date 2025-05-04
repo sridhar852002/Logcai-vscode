@@ -1,0 +1,300 @@
+{
+  "name": "logcai",
+  "displayName": "LogCAI - Local AI Chat, Copilot Alternative with Ollama, RAG, Inline Completion, Test Generator",
+  "publisher": "Sridhar85",
+  "description": "Copilot alternative with local + cloud AI (Ollama, GPT-4, Claude) for chat, code completion, test generation, and code search — private, fast, and extensible.",
+  "keywords": [
+    "AI",
+    "Copilot",
+    "ChatGPT",
+    "Code Completion",
+    "Autocomplete",
+    "Ollama",
+    "Claude",
+    "GPT-4",
+    "Test Generation",
+    "Local LLM",
+    "Offline AI",
+    "Inline Suggestions",
+    "RAG",
+    "Multi-file Edit",
+    "Context Aware"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sridhar852002/Logcai-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sridhar852002/Logcai-vscode/issues"
+  },
+  "homepage": "https://github.com/sridhar852002/Logcai-vscode#readme",
+  "version": "0.1.0",
+  "icon": "media/logo.png",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:logcai.welcome"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "logcai-sidebar",
+          "title": "LogCAI",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "logcai.openChat",
+          "group": "navigation",
+          "when": "view == logcai.welcome"
+        }
+      ]
+    },
+    "views": {
+      "logcai-sidebar": [
+        {
+          "id": "logcai.welcome",
+          "name": "LogCAI",
+          "icon": "media/logo.png",
+          "type": "webview",
+          "initialSize": 1
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "logcai.welcome",
+        "contents": "Opening LogCAI Chat...",
+        "when": "true"
+      }
+    ],
+    "commands": [
+      {
+        "command": "logcai.activateExtension",
+        "title": "LogCAI: Activate Extension",
+        "category": "LogCAI"
+      },
+      {
+        "command": "logcai.openChat",
+        "title": "LogCAI: Open Chat",
+        "category": "LogCAI",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "logcai.getInlineCompletion",
+        "title": "LogCAI: Get Inline Completion",
+        "category": "LogCAI",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "logcai.indexCodebase",
+        "title": "LogCAI: Index Codebase",
+        "category": "LogCAI",
+        "icon": "$(database)"
+      },
+      {
+        "command": "logcai.clearCodebaseIndex",
+        "title": "LogCAI: Clear Codebase Index",
+        "category": "LogCAI",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "logcai.selectModelProvider",
+        "title": "LogCAI: Select Model Provider",
+        "category": "LogCAI",
+        "icon": "$(server)"
+      },
+      {
+        "command": "logcai.selectOllamaModel",
+        "title": "LogCAI: Select Ollama Model",
+        "category": "LogCAI",
+        "icon": "$(server-environment)"
+      },
+      {
+        "command": "logcai.installOllamaModel",
+        "title": "LogCAI: Install Ollama Model",
+        "category": "LogCAI",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "logcai.runDiagnostics",
+        "title": "LogCAI: Run Diagnostics",
+        "category": "LogCAI",
+        "icon": "$(check-all)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "logcai.getInlineCompletion",
+        "key": "alt+\\",
+        "mac": "alt+\\",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "LogCAI",
+      "properties": {
+        "logcai.modelProvider": {
+          "type": "string",
+          "enum": [
+            "ollama",
+            "openai",
+            "anthropic"
+          ],
+          "default": "ollama",
+          "description": "The AI model provider to use"
+        },
+        "logcai.ollamaEndpoint": {
+          "type": "string",
+          "default": "http://localhost:11434/api/generate",
+          "description": "The Ollama API endpoint"
+        },
+        "logcai.ollamaModel": {
+          "type": "string",
+          "default": "",
+          "description": "The Ollama model to use (e.g., llama3, mistral, codellama, etc.)"
+        },
+        "logcai.openaiModel": {
+          "type": "string",
+          "default": "gpt-4o",
+          "description": "The OpenAI model to use"
+        },
+        "logcai.anthropicModel": {
+          "type": "string",
+          "default": "claude-3-opus-20240229",
+          "description": "The Anthropic model to use"
+        },
+        "logcai.maxContextLength": {
+          "type": "number",
+          "default": 4000,
+          "description": "Maximum length of context to send to model"
+        },
+        "logcai.includeImports": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include imported files in context"
+        },
+        "logcai.includeProjectStructure": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include project structure in context"
+        },
+        "logcai.maxFilesToProcess": {
+          "type": "number",
+          "default": 20,
+          "description": "Maximum files to process in context extraction"
+        },
+        "logcai.enableInlineSuggestions": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable inline code suggestions"
+        },
+        "logcai.completionTriggerChars": {
+          "type": "string",
+          "default": " .({[",
+          "description": "Characters that trigger completion"
+        },
+        "logcai.inlinePreviewDelay": {
+          "type": "number",
+          "default": 0.2,
+          "description": "Delay before showing inline suggestions (seconds)"
+        },
+        "logcai.temperature": {
+          "type": "number",
+          "default": 0.2,
+          "description": "Temperature for model responses (0.0-1.0)"
+        },
+        "logcai.maxTokens": {
+          "type": "number",
+          "default": 2048,
+          "description": "Maximum tokens to generate in responses"
+        },
+        "logcai.showInlinePreview": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a preview of the inline completion before accepting it"
+        },
+        "logcai.continueInlineOnAccept": {
+          "type": "boolean",
+          "default": true,
+          "description": "Continue generating more text when accepting an inline suggestion"
+        },
+        "logcai.inlineCompletionStop": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "```"
+          ],
+          "description": "Sequences that will stop the inline completion generation"
+        },
+        "logcai.logLevel": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warn",
+            "info",
+            "debug"
+          ],
+          "default": "info",
+          "description": "Log level for extension"
+        },
+        "logcai.enableRAG": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Retrieval Augmented Generation for better code understanding"
+        },
+        "logcai.autoIndexCodebase": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically index codebase on extension activation"
+        },
+        "logcai.maxRAGSnippets": {
+          "type": "number",
+          "default": 3,
+          "description": "Maximum number of code snippets to include in RAG context"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "lint": "eslint src --ext ts",
+    "build": "npm run compile && npm run copy-media",
+    "copy-media": "mkdir -p dist/media && cp -r media/* dist/media/ || true"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/uuid": "^9.0.8",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "eslint": "^9.3.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "uuid": "^9.0.1"
+  }
+}
